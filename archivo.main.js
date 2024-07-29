@@ -34,51 +34,51 @@ function preload() {
 }
 
 function create() {
-    // Crear el fondo con la nueva imagen proporcionada
+    //  fondo con la nueva imagen proporcionada
     this.add.image(400, 170, 'background').setOrigin(0.5).setDisplaySize(800, 625);
 
-    // Crear el sprite del nuevo rollo de canela
+    // el sprite del nuevo rollo de canela
     const rolloHeightAdjustment = 135;  
     this.rollo = this.physics.add.sprite(130, this.scale.height - 100 - rolloHeightAdjustment, 'rollo'); 
     this.rollo.setScale(0.2);  // Incrementar el tamaño del sprite
     this.rollo.setBounce(0.2);
     this.rollo.setCollideWorldBounds(true);
 
-    // Ajustar el tamaño del cuerpo de colisión del rollo 
+    // tamaño del cuerpo de colisión del rollo 
     this.rollo.body.setSize(this.rollo.width - 185, this.rollo.height - 195).setOffset(15, 15);
 
-    // Crear una plataforma invisible para que el rollo tenga una superficie donde saltar
+    //  plataforma para que el rollo se dslize
     const ground = this.add.rectangle(400, this.scale.height - 45, 800, 20);  
     this.physics.add.existing(ground, true);  
 
-    // Hacer que el rollo colisione con el suelo
+    // Hacer que el rollo toque el suelo
     this.physics.add.collider(this.rollo, ground);
 
-    // Crear un grupo de obstáculos
+    // Crear obstáculos
     this.obstacles = this.physics.add.group({
         maxSize: 7,
         immovable: true,
         allowGravity: false
     });
 
-    // Añadir colisión entre los obstáculos y el rollo
+    // Añadir choque entre la cola y el rollo
     this.physics.add.collider(this.rollo, this.obstacles, hitObstacle, null, this);
 
-    // Generar el primer obstáculo
+    // llamar al primer obstáculo
     addObstacle.call(this);
 
     // Configurar los controles del teclado
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);  
 
-    // Ajustar los límites del mundo para que el rollo no se salga de los límites del escenario
+    // Ajustar los límites del mundo para que el rollo no se salga de los límites
     this.physics.world.setBounds(0, 0, 800, 400);
     this.rollo.body.setCollideWorldBounds(true);
 
-    // Crear texto de Game Over (oculto inicialmente)
+    // Crear texto de game over y  ocultarlo inicialmente
     gameOverText = this.add.text(400, 150, 'Game Over', { fontSize: '64px', fill: '#ff0000' }).setOrigin(0.5).setVisible(false);
 
-    // Crear botón de reinicio (oculto inicialmente)
+    // Crear botón de reinicio y ocultarlo
     restartButton = this.add.text(400, 250, 'Volver a jugar', { 
         fontSize: '32px', 
         fill: '#fff', 
@@ -88,7 +88,7 @@ function create() {
         align: 'center'
     }).setOrigin(0.5).setVisible(false).setInteractive();
 
-    // Añadir estilo CSS para el botón
+    // estilo para el botón
     restartButton.setStyle({
         cursor: 'pointer'
     });
@@ -103,7 +103,7 @@ function update() {
         return;
     }
 
-    // Movimiento horizontal
+    // moverse pa los lados
 
     if (this.cursors.left.isDown) {
         this.rollo.setVelocityX(-160); 
@@ -113,7 +113,7 @@ function update() {
         this.rollo.setVelocityX(0);  
     }
 
-    // Salto
+    // saltar
 
     if ((this.cursors.up.isDown || this.spaceBar.isDown) && this.rollo.body.touching.down) {
         this.rollo.setVelocityY(-450);  
@@ -131,7 +131,7 @@ function update() {
         }
     }, this);
 
-    // Mostrar la taza de café al final después de 5 segundos del último obstáculo
+    // mostrar la taza de café al final después del ultima lata de cola
 
     if (obstacleCount >= maxObstacles && !this.coffeeTimer) {
         this.coffeeTimer = this.time.addEvent({
@@ -142,7 +142,7 @@ function update() {
         });
     }   
 
-    // Hacer que la taza de café rebote en los bordes
+    // hacer que la taza de cafe no se salga de la pantalla
     if (this.coffee) {
         if (this.coffee.x <= 0 || this.coffee.x >= 800) {
             this.coffee.setVelocityX(this.coffee.body.velocity.x * -1); 
@@ -161,18 +161,18 @@ function addObstacle() {
         obstacle.body.enable = true;
         obstacle.setScale(0.18); 
 
-        // Ajustar el tamaño del cuerpo de colisión del obstáculo
+        // ajustar el espacio del cuerpo de colisión de la cola
         obstacle.body.setSize(obstacle.width - 140, obstacle.height - 140).setOffset(15, 15);
 
         obstacle.setVelocityX(-50);  
 
-        // Actualizar la última posición del obstáculo
+        // actualizar la última posición del obstáculo
         lastObstacleX = obstacle.x;
 
-        // Incrementar el contador de obstáculos
+        // incrementar el contador de obstáculos
         obstacleCount++;
 
-        // Agregar un nuevo evento de tiempo con un intervalo aleatorio
+        // agregar un nuevo evento de tiempo con un intervalo aleatorio
         this.time.addEvent({
             delay: getRandomInterval(),
             callback: addObstacle,
@@ -211,13 +211,13 @@ function hitCoffee(rollo, coffee) {
     rollo.setTint();
     coffee.setTint();
 
-    // Crear y mostrar el texto "¡Disfrútalo con un café!"
+    
     enjoyText = this.add.text(400, 150, '¡Disfrútalo con un café!', { 
         fontSize: '32px', 
         fill: '#000' 
     }).setOrigin(0.5);
 
-    // Crear y mostrar el texto "Dulce Canela" con bordes redondeados
+
     brandText = this.add.text(400, 250, 'Dulce Canela', { 
         fontSize: '32px', 
         fill: '#fff', 
@@ -228,7 +228,7 @@ function hitCoffee(rollo, coffee) {
         borderRadius: '15px'
     }).setOrigin(0.5).setStyle({ borderRadius: '15px' });
 
-    // Añadir el botón de cierre
+    // botón de repetir
     closeButton = this.add.text(760, 20, 'X', { 
         fontSize: '32px', 
         fill: '#fff', 
@@ -266,7 +266,7 @@ function resetGame() {
     gameOverText.setVisible(false);
     restartButton.setVisible(false);
 
-    // Ocultar los textos de "¡Disfrútalo con un café!" y "Dulce Canela"
+    //ocultar el texto despues de que gana
     if (enjoyText) {
         enjoyText.destroy();
         enjoyText = null;
