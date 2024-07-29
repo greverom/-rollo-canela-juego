@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rollo de Canela Juego</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+    <script src="archivo.main.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e6eaec;
+        }
+        .game-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: -25rem;
+  /* Asegúrate de que el ancho del contenedor coincida con el del juego */
+            height: 400px;  /* Asegúrate de que la altura del contenedor coincida con el del juego */
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 32px;
+            color: #fff;
+            background-color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="closeButton" class="close-button" style="display: none;">X</div>
+    </div>
+</body>
+</html>
